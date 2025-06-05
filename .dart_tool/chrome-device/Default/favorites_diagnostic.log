@@ -1,0 +1,28 @@
+2025-06-03 18:49:36.765: [INFO] VisibilityChanged: 0
+2025-06-03 18:49:37.047: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 0
+2025-06-03 18:49:37.049: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 0
+2025-06-03 18:49:37.051: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 0
+2025-06-03 18:49:37.053: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 0
+2025-06-03 18:49:37.055: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 0
+2025-06-03 18:49:37.057: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 0
+2025-06-03 18:49:37.059: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 0
+2025-06-03 18:49:37.060: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 0
+2025-06-03 18:49:37.062: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 0
+2025-06-03 18:49:37.064: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 0
+2025-06-03 18:49:37.066: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 0
+2025-06-03 18:49:37.091: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2025-06-03 18:49:37.091: [INFO] OnDoneLoading sync enabled: 0
+2025-06-03 18:49:37.099: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 0
+2025-06-03 18:49:37.892: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 3
+2025-06-03 18:49:37.908: [INFO] Primary account changed.
+2025-06-03 18:49:37.908: [INFO] OnPrimaryAccountChanged PrimaryAccountChangeEvent::Type::kSet
+2025-06-03 18:49:37.915: [INFO] RecordSyncInitDuration has_sync_been_enabled: 0 state: 3
+2025-06-03 18:49:54.712: [INFO] Sync initialization duration: 14539ms
+2025-06-04 10:33:15.455: [INFO] VisibilityChanged: 0
+2025-06-04 10:33:16.206: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2025-06-04 10:33:16.206: [INFO] OnDoneLoading sync enabled: 1
+2025-06-04 10:33:24.112: [INFO] Sync initialization duration: 5771ms
+2025-06-04 10:43:24.949: [INFO] VisibilityChanged: 0
+2025-06-04 10:43:25.428: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2025-06-04 10:43:25.428: [INFO] OnDoneLoading sync enabled: 1
+2025-06-04 10:43:32.296: [INFO] Sync initialization duration: 5088ms

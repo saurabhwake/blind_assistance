@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:ui';
-import 'dart:math';
+
+// Import your modular screens here:
+import 'settings/profile_screen.dart';
+import 'settings/feedback_screen.dart';
+import 'settings/help_support_screen.dart';
+import 'settings/about_screen.dart';
+import 'settings/privacy_policy_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({super.key});
+
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }
@@ -21,11 +29,11 @@ class _SettingsScreenState extends State<SettingsScreen>
   String _selectedLanguage = 'English';
   String _selectedVoice = 'Samantha';
 
-  // Controllers for animations
+  // Animation controllers
   late AnimationController _animationController;
   late AnimationController _floatingController;
 
-  // Modern Vibrant Color Scheme (matching other screens) - FIXED: Added missing vibrantRed
+  // Vibrant color scheme
   static const Color primaryBackground = Color(0xFFF8FAFF);
   static const Color secondaryBackground = Color(0xFFFFFFFF);
   static const Color primaryText = Color(0xFF1A1B3A);
@@ -35,8 +43,7 @@ class _SettingsScreenState extends State<SettingsScreen>
   static const Color vibrantPink = Color(0xFFEC4899);
   static const Color vibrantGreen = Color(0xFF10B981);
   static const Color vibrantOrange = Color(0xFFF59E0B);
-  static const Color vibrantRed =
-      Color(0xFFEF4444); // FIXED: Added missing vibrantRed
+  static const Color vibrantRed = Color(0xFFEF4444);
   static const Color lightBlue = Color(0xFFDBEAFE);
   static const Color lightPurple = Color(0xFFE9D5FF);
 
@@ -59,11 +66,11 @@ class _SettingsScreenState extends State<SettingsScreen>
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: Duration(milliseconds: 1200),
+      duration: const Duration(milliseconds: 1200),
       vsync: this,
     );
     _floatingController = AnimationController(
-      duration: Duration(seconds: 6),
+      duration: const Duration(seconds: 6),
       vsync: this,
     )..repeat(reverse: true);
 
@@ -84,7 +91,7 @@ class _SettingsScreenState extends State<SettingsScreen>
           ? ThemeData.dark().copyWith(
               scaffoldBackgroundColor: darkPrimaryBackground,
               primaryColor: vibrantBlue,
-              colorScheme: ColorScheme.dark(
+              colorScheme: const ColorScheme.dark(
                 primary: vibrantBlue,
                 secondary: vibrantPurple,
               ),
@@ -92,7 +99,7 @@ class _SettingsScreenState extends State<SettingsScreen>
           : ThemeData.light().copyWith(
               scaffoldBackgroundColor: primaryBackground,
               primaryColor: vibrantBlue,
-              colorScheme: ColorScheme.light(
+              colorScheme: const ColorScheme.light(
                 primary: vibrantBlue,
                 secondary: vibrantPurple,
               ),
@@ -101,28 +108,25 @@ class _SettingsScreenState extends State<SettingsScreen>
         backgroundColor: _currentPrimaryBackground,
         body: Stack(
           children: [
-            // Modern Animated Background
             _buildModernBackground(),
-
-            // Main Content
             SafeArea(
               child: Column(
                 children: [
                   _buildModernHeader(),
                   Expanded(
                     child: SingleChildScrollView(
-                      physics: BouncingScrollPhysics(),
-                      padding: EdgeInsets.symmetric(horizontal: 24),
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 32),
+                          const SizedBox(height: 32),
                           _buildModernTitle(),
-                          SizedBox(height: 32),
+                          const SizedBox(height: 32),
                           _buildProfileSection(),
-                          SizedBox(height: 32),
+                          const SizedBox(height: 32),
                           _buildSettingsCategories(),
-                          SizedBox(height: 40),
+                          const SizedBox(height: 40),
                         ],
                       ),
                     ),
@@ -150,7 +154,7 @@ class _SettingsScreenState extends State<SettingsScreen>
               colors: _darkMode
                   ? [
                       darkPrimaryBackground,
-                      Color(0xFF192133),
+                      const Color(0xFF192133),
                       vibrantBlue.withOpacity(0.05),
                       vibrantPurple.withOpacity(0.02),
                       darkPrimaryBackground,
@@ -161,7 +165,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                       lightPurple.withOpacity(0.2),
                       primaryBackground,
                     ],
-              stops: [0.0, 0.4, 0.7, 0.9, 1.0],
+              stops: const [0.0, 0.4, 0.7, 0.9, 1.0],
             ),
           ),
         );
@@ -172,20 +176,20 @@ class _SettingsScreenState extends State<SettingsScreen>
   Widget _buildModernHeader() {
     return SlideTransition(
       position: Tween<Offset>(
-        begin: Offset(0, -1),
+        begin: const Offset(0, -1),
         end: Offset.zero,
       ).animate(CurvedAnimation(
         parent: _animationController,
         curve: Curves.elasticOut,
       )),
       child: Container(
-        margin: EdgeInsets.all(24),
+        margin: const EdgeInsets.all(24),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(24),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
@@ -211,31 +215,13 @@ class _SettingsScreenState extends State<SettingsScreen>
                   BoxShadow(
                     color: vibrantBlue.withOpacity(0.1),
                     blurRadius: 20,
-                    offset: Offset(0, 8),
+                    offset: const Offset(0, 8),
                   ),
                 ],
               ),
               child: Row(
                 children: [
-                  Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () => Navigator.pop(context),
-                      borderRadius: BorderRadius.circular(12),
-                      child: Container(
-                        padding: EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: vibrantBlue.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Icon(
-                          Icons.arrow_back_ios_rounded,
-                          color: vibrantBlue,
-                          size: 20,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // The back arrow button has been removed here.
                   Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -244,7 +230,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                           width: 48,
                           height: 48,
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(
+                            gradient: const LinearGradient(
                               colors: [vibrantBlue, vibrantPurple],
                             ),
                             borderRadius: BorderRadius.circular(16),
@@ -252,17 +238,17 @@ class _SettingsScreenState extends State<SettingsScreen>
                               BoxShadow(
                                 color: vibrantBlue.withOpacity(0.3),
                                 blurRadius: 8,
-                                offset: Offset(0, 4),
+                                offset: const Offset(0, 4),
                               ),
                             ],
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.settings_rounded,
                             color: secondaryBackground,
                             size: 24,
                           ),
                         ),
-                        SizedBox(width: 16),
+                        const SizedBox(width: 16),
                         Text(
                           'Settings',
                           style: TextStyle(
@@ -274,19 +260,18 @@ class _SettingsScreenState extends State<SettingsScreen>
                       ],
                     ),
                   ),
-                  // 3-dot menu
                   Material(
                     color: Colors.transparent,
                     child: InkWell(
                       onTap: () => _showContextMenu(context),
                       borderRadius: BorderRadius.circular(12),
                       child: Container(
-                        padding: EdgeInsets.all(12),
+                        padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
                           color: vibrantBlue.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.more_vert_rounded,
                           color: vibrantBlue,
                           size: 20,
@@ -302,13 +287,12 @@ class _SettingsScreenState extends State<SettingsScreen>
       ),
     );
   }
-
   Widget _buildModernTitle() {
     return FadeTransition(
       opacity: Tween<double>(begin: 0, end: 1).animate(
         CurvedAnimation(
           parent: _animationController,
-          curve: Interval(0.3, 1.0, curve: Curves.easeOut),
+          curve: const Interval(0.3, 1.0, curve: Curves.easeOut),
         ),
       ),
       child: Column(
@@ -323,7 +307,7 @@ class _SettingsScreenState extends State<SettingsScreen>
               height: 1.2,
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             'Customize your experience for better accessibility',
             style: TextStyle(
@@ -340,7 +324,7 @@ class _SettingsScreenState extends State<SettingsScreen>
 
   Widget _buildProfileSection() {
     return Container(
-      padding: EdgeInsets.all(24),
+      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -360,7 +344,7 @@ class _SettingsScreenState extends State<SettingsScreen>
           BoxShadow(
             color: vibrantBlue.withOpacity(0.1),
             blurRadius: 20,
-            offset: Offset(0, 8),
+            offset: const Offset(0, 8),
           ),
         ],
       ),
@@ -372,7 +356,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                     colors: [vibrantBlue, vibrantPurple],
                   ),
                   shape: BoxShape.circle,
@@ -380,11 +364,11 @@ class _SettingsScreenState extends State<SettingsScreen>
                     BoxShadow(
                       color: vibrantBlue.withOpacity(0.3),
                       blurRadius: 15,
-                      offset: Offset(0, 8),
+                      offset: const Offset(0, 8),
                     ),
                   ],
                 ),
-                child: Center(
+                child: const Center(
                   child: Icon(
                     Icons.person_rounded,
                     color: secondaryBackground,
@@ -392,7 +376,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                   ),
                 ),
               ),
-              SizedBox(width: 20),
+              const SizedBox(width: 20),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -405,7 +389,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                         color: _currentPrimaryText,
                       ),
                     ),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Text(
                       'Set up your preferences for a personalized experience',
                       style: TextStyle(
@@ -418,12 +402,15 @@ class _SettingsScreenState extends State<SettingsScreen>
               ),
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           InkWell(
-            onTap: () => _showEditProfileDialog(),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const ProfileScreen()),
+            ),
             borderRadius: BorderRadius.circular(16),
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
               decoration: BoxDecoration(
                 color: vibrantBlue,
                 borderRadius: BorderRadius.circular(16),
@@ -431,13 +418,13 @@ class _SettingsScreenState extends State<SettingsScreen>
                   BoxShadow(
                     color: vibrantBlue.withOpacity(0.3),
                     blurRadius: 10,
-                    offset: Offset(0, 4),
+                    offset: const Offset(0, 4),
                   ),
                 ],
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: const [
                   Icon(
                     Icons.edit_rounded,
                     color: secondaryBackground,
@@ -467,7 +454,7 @@ class _SettingsScreenState extends State<SettingsScreen>
       children: [
         // Appearance Section
         _buildSettingsSectionHeader('Appearance', Icons.palette_outlined),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         _buildSettingsCard([
           _buildAnimatedSwitchTile(
             'Dark Mode',
@@ -503,13 +490,12 @@ class _SettingsScreenState extends State<SettingsScreen>
             vibrantOrange,
           ),
         ]),
-
-        SizedBox(height: 32),
+        const SizedBox(height: 32),
 
         // Accessibility Section
         _buildSettingsSectionHeader(
             'Accessibility', Icons.accessibility_new_rounded),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         _buildSettingsCard([
           _buildAnimatedSwitchTile(
             'Voice Guidance',
@@ -547,12 +533,12 @@ class _SettingsScreenState extends State<SettingsScreen>
           ),
         ]),
 
-        SizedBox(height: 32),
+        const SizedBox(height: 32),
 
         // Notifications Section
         _buildSettingsSectionHeader(
             'Notifications', Icons.notifications_active_rounded),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         _buildSettingsCard([
           _buildAnimatedSwitchTile(
             'Push Notifications',
@@ -567,11 +553,11 @@ class _SettingsScreenState extends State<SettingsScreen>
           ),
         ]),
 
-        SizedBox(height: 32),
+        const SizedBox(height: 32),
 
         // Language Section
         _buildSettingsSectionHeader('Language & Voice', Icons.language_rounded),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         _buildSettingsCard([
           _buildDropdownTile(
             'Language',
@@ -599,31 +585,60 @@ class _SettingsScreenState extends State<SettingsScreen>
           ),
         ]),
 
-        SizedBox(height: 32),
+        const SizedBox(height: 32),
 
         // About and Help Section
         _buildSettingsSectionHeader('About & Help', Icons.help_outline_rounded),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         _buildSettingsCard([
           _buildNavigationTile(
-            'About the App',
-            'Version, licenses & credits',
-            Icons.info_outline_rounded,
-            () => _showAboutDialog(),
-            vibrantGreen,
+            'Profile',
+            'View and edit your profile',
+            Icons.account_circle_rounded,
+            () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const ProfileScreen()),
+            ),
+            vibrantBlue,
+          ),
+          _buildNavigationTile(
+            'Feedback',
+            'Send us your feedback',
+            Icons.feedback_rounded,
+            () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const FeedbackScreen()),
+            ),
+            vibrantPurple,
           ),
           _buildNavigationTile(
             'Help & Support',
             'Get assistance with the app',
             Icons.support_agent_rounded,
-            () => _showHelpDialog(),
+            () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const HelpSupportScreen()),
+            ),
             vibrantOrange,
+          ),
+          _buildNavigationTile(
+            'About the App',
+            'Version, licenses & credits',
+            Icons.info_outline_rounded,
+            () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const AboutScreen()),
+            ),
+            vibrantGreen,
           ),
           _buildNavigationTile(
             'Privacy Policy',
             'How we handle your data',
             Icons.security_rounded,
-            () => _showPrivacyPolicyDialog(),
+            () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const PrivacyPolicyScreen()),
+            ),
             vibrantPurple,
           ),
         ]),
@@ -639,7 +654,7 @@ class _SettingsScreenState extends State<SettingsScreen>
           color: vibrantBlue,
           size: 24,
         ),
-        SizedBox(width: 12),
+        const SizedBox(width: 12),
         Text(
           title,
           style: TextStyle(
@@ -661,7 +676,7 @@ class _SettingsScreenState extends State<SettingsScreen>
           BoxShadow(
             color: vibrantBlue.withOpacity(0.05),
             blurRadius: 20,
-            offset: Offset(0, 8),
+            offset: const Offset(0, 8),
           ),
         ],
       ),
@@ -680,16 +695,16 @@ class _SettingsScreenState extends State<SettingsScreen>
     Color iconColor,
   ) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
         onTap: () => onChanged(!value),
         borderRadius: BorderRadius.circular(16),
         child: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Row(
             children: [
               Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: iconColor.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
@@ -700,7 +715,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                   size: 20,
                 ),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -747,16 +762,16 @@ class _SettingsScreenState extends State<SettingsScreen>
     Color iconColor,
   ) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: iconColor.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
@@ -767,7 +782,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                     size: 20,
                   ),
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -791,7 +806,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                   ),
                 ),
                 Text(
-                  value.toStringAsFixed(1) + 'x',
+                  '${value.toStringAsFixed(1)}x',
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -800,7 +815,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             SliderTheme(
               data: SliderThemeData(
                 activeTrackColor: iconColor,
@@ -834,13 +849,13 @@ class _SettingsScreenState extends State<SettingsScreen>
     Color iconColor,
   ) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Row(
           children: [
             Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: iconColor.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
@@ -851,7 +866,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                 size: 20,
               ),
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -882,7 +897,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                 fontWeight: FontWeight.w600,
                 color: _currentPrimaryText,
               ),
-              underline: SizedBox(),
+              underline: const SizedBox(),
               onChanged: onChanged,
               items: options.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
@@ -906,7 +921,7 @@ class _SettingsScreenState extends State<SettingsScreen>
     Color iconColor,
   ) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
         onTap: () {
           HapticFeedback.lightImpact();
@@ -914,11 +929,11 @@ class _SettingsScreenState extends State<SettingsScreen>
         },
         borderRadius: BorderRadius.circular(16),
         child: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Row(
             children: [
               Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: iconColor.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
@@ -929,7 +944,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                   size: 20,
                 ),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1005,7 +1020,7 @@ class _SettingsScreenState extends State<SettingsScreen>
         _buildPopupMenuItem(
           'Report Issue',
           Icons.bug_report_rounded,
-          vibrantRed, // Now properly defined
+          vibrantRed,
           () => _reportIssue(),
         ),
       ],
@@ -1027,7 +1042,7 @@ class _SettingsScreenState extends State<SettingsScreen>
       child: Row(
         children: [
           Container(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: color.withOpacity(0.1),
               borderRadius: BorderRadius.circular(8),
@@ -1038,7 +1053,7 @@ class _SettingsScreenState extends State<SettingsScreen>
               size: 18,
             ),
           ),
-          SizedBox(width: 12),
+          const SizedBox(width: 12),
           Text(
             text,
             style: TextStyle(
@@ -1048,353 +1063,6 @@ class _SettingsScreenState extends State<SettingsScreen>
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  // Dialog functions
-  void _showEditProfileDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => Dialog(
-        backgroundColor: Colors.transparent,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(24),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(
-              padding: EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: _currentSecondaryBackground,
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'Edit Profile',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: _currentPrimaryText,
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundColor: vibrantBlue,
-                    child: Icon(
-                      Icons.person_rounded,
-                      color: secondaryBackground,
-                      size: 40,
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Your Name',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Email (optional)',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 24),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () => Navigator.pop(context),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: _darkMode
-                                ? darkSecondaryBackground
-                                : Colors.grey[200],
-                            foregroundColor:
-                                _darkMode ? darkPrimaryText : primaryText,
-                          ),
-                          child: Text('Cancel'),
-                        ),
-                      ),
-                      SizedBox(width: 12),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Profile updated successfully'),
-                                backgroundColor: vibrantGreen,
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: vibrantBlue,
-                            foregroundColor: secondaryBackground,
-                          ),
-                          child: Text('Save'),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _showAboutDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => Dialog(
-        backgroundColor: Colors.transparent,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(24),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(
-              padding: EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: _currentSecondaryBackground,
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'About Sense Path',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: _currentPrimaryText,
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [vibrantBlue, vibrantPurple],
-                      ),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.visibility_rounded,
-                      color: secondaryBackground,
-                      size: 40,
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  Text(
-                    'Version 1.0.0',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: _currentPrimaryText,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Sense Path is a vision assistance app designed to help users navigate and interact with their environment using advanced AI technology.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: _currentSecondaryText,
-                    ),
-                  ),
-                  SizedBox(height: 24),
-                  ElevatedButton(
-                    onPressed: () => Navigator.pop(context),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: vibrantBlue,
-                      foregroundColor: secondaryBackground,
-                    ),
-                    child: Text('Close'),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _showHelpDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => Dialog(
-        backgroundColor: Colors.transparent,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(24),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(
-              padding: EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: _currentSecondaryBackground,
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'Help & Support',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: _currentPrimaryText,
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: vibrantGreen.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Column(
-                      children: [
-                        Icon(
-                          Icons.support_agent_rounded,
-                          color: vibrantGreen,
-                          size: 32,
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          'Contact Support',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: _currentPrimaryText,
-                          ),
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          'support@sensepath.app',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: vibrantGreen,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: vibrantBlue.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Column(
-                      children: [
-                        Icon(
-                          Icons.help_outline_rounded,
-                          color: vibrantBlue,
-                          size: 32,
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          'Frequently Asked Questions',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: _currentPrimaryText,
-                          ),
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          'Get answers to common questions',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: _currentSecondaryText,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 24),
-                  ElevatedButton(
-                    onPressed: () => Navigator.pop(context),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: vibrantBlue,
-                      foregroundColor: secondaryBackground,
-                    ),
-                    child: Text('Close'),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _showPrivacyPolicyDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => Dialog(
-        backgroundColor: Colors.transparent,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(24),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(
-              padding: EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: _currentSecondaryBackground,
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'Privacy Policy',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: _currentPrimaryText,
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Flexible(
-                    child: SingleChildScrollView(
-                      child: Text(
-                        'Sense Path is committed to protecting your privacy. Our app processes data locally on your device whenever possible. When cloud processing is required, we anonymize data and delete it after processing. We do not sell your data to third parties.',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: _currentSecondaryText,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 24),
-                  ElevatedButton(
-                    onPressed: () => Navigator.pop(context),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: vibrantBlue,
-                      foregroundColor: secondaryBackground,
-                    ),
-                    child: Text('Close'),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }
@@ -1409,7 +1077,7 @@ class _SettingsScreenState extends State<SettingsScreen>
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Container(
-              padding: EdgeInsets.all(24),
+              padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
                 color: _currentSecondaryBackground,
                 borderRadius: BorderRadius.circular(24),
@@ -1418,18 +1086,18 @@ class _SettingsScreenState extends State<SettingsScreen>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: vibrantRed.withOpacity(0.1),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.refresh_rounded,
                       color: vibrantRed,
                       size: 32,
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Text(
                     'Reset Settings',
                     style: TextStyle(
@@ -1438,7 +1106,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                       color: _currentPrimaryText,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     'This will reset all settings to their default values. This action cannot be undone.',
                     textAlign: TextAlign.center,
@@ -1447,7 +1115,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                       color: _currentSecondaryText,
                     ),
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   Row(
                     children: [
                       Expanded(
@@ -1460,10 +1128,10 @@ class _SettingsScreenState extends State<SettingsScreen>
                             foregroundColor:
                                 _darkMode ? darkPrimaryText : primaryText,
                           ),
-                          child: Text('Cancel'),
+                          child: const Text('Cancel'),
                         ),
                       ),
-                      SizedBox(width: 12),
+                      const SizedBox(width: 12),
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
@@ -1481,7 +1149,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                             Navigator.pop(context);
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text('Settings reset to defaults'),
+                                content: const Text('Settings reset to defaults'),
                                 backgroundColor: vibrantBlue,
                               ),
                             );
@@ -1490,7 +1158,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                             backgroundColor: vibrantRed,
                             foregroundColor: secondaryBackground,
                           ),
-                          child: Text('Reset'),
+                          child: const Text('Reset'),
                         ),
                       ),
                     ],
@@ -1504,11 +1172,10 @@ class _SettingsScreenState extends State<SettingsScreen>
     );
   }
 
-  // Additional functions for the context menu options
   void _exportSettings() {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Settings exported successfully'),
+        content: const Text('Settings exported successfully'),
         backgroundColor: vibrantGreen,
       ),
     );
@@ -1517,7 +1184,7 @@ class _SettingsScreenState extends State<SettingsScreen>
   void _importSettings() {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Settings imported successfully'),
+        content: const Text('Settings imported successfully'),
         backgroundColor: vibrantBlue,
       ),
     );
@@ -1526,7 +1193,7 @@ class _SettingsScreenState extends State<SettingsScreen>
   void _reportIssue() {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Issue reported. Thank you for your feedback!'),
+        content: const Text('Issue reported. Thank you for your feedback!'),
         backgroundColor: vibrantOrange,
       ),
     );

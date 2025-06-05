@@ -8,6 +8,8 @@ import '../screens/emergency_screen.dart';
 import '../screens/settings_screen.dart';
 
 class BottomNavigationWrapper extends StatefulWidget {
+  const BottomNavigationWrapper({super.key});
+
   @override
   _BottomNavigationWrapperState createState() =>
       _BottomNavigationWrapperState();

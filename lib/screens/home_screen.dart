@@ -4,6 +4,8 @@ import 'dart:ui';
 import 'dart:math';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -13,20 +15,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late AnimationController _floatingController;
   late AnimationController _rotationController;
 
-  // Modern Vibrant Color Scheme - 2025 Trends
-  static const Color primaryBackground =
-      Color(0xFFF8FAFF); // Ultra-light blue-white
-  static const Color secondaryBackground = Color(0xFFFFFFFF); // Pure white
-  static const Color primaryText = Color(0xFF1A1B3A); // Deep navy
-  static const Color secondaryText = Color(0xFF6B7280); // Cool gray
-  static const Color vibrantBlue = Color(0xFF3B82F6); // Modern blue
-  static const Color vibrantPurple = Color(0xFF8B5CF6); // Electric purple
-  static const Color vibrantPink = Color(0xFFEC4899); // Bright pink
-  static const Color vibrantGreen = Color(0xFF10B981); // Fresh green
-  static const Color vibrantOrange = Color(0xFFF59E0B); // Warm orange
-  static const Color vibrantRed = Color(0xFFEF4444); // Modern red
-  static const Color lightBlue = Color(0xFFDBEAFE); // Soft blue
-  static const Color lightPurple = Color(0xFFE9D5FF); // Soft purple
+  static const Color primaryBackground = Color(0xFFF8FAFF);
+  static const Color secondaryBackground = Color(0xFFFFFFFF);
+  static const Color primaryText = Color(0xFF1A1B3A);
+  static const Color secondaryText = Color(0xFF6B7280);
+  static const Color vibrantBlue = Color(0xFF3B82F6);
+  static const Color vibrantPurple = Color(0xFF8B5CF6);
+  static const Color vibrantPink = Color(0xFFEC4899);
+  static const Color vibrantGreen = Color(0xFF10B981);
+  static const Color vibrantOrange = Color(0xFFF59E0B);
+  static const Color vibrantRed = Color(0xFFEF4444);
+  static const Color lightBlue = Color(0xFFDBEAFE);
+  static const Color lightPurple = Color(0xFFE9D5FF);
 
   @override
   void initState() {
@@ -59,35 +59,33 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final isWide = width > 600;
+
     return Scaffold(
       backgroundColor: primaryBackground,
       body: Stack(
         children: [
-          // Vibrant Gradient Background
           _buildVibrantBackground(),
-
-          // Floating Modern Elements
           _buildModernFloatingElements(),
-
-          // Main Content with proper scrolling
           SafeArea(
             child: Column(
               children: [
-                _buildModernHeader(),
+                _buildModernHeader(width),
                 Expanded(
                   child: SingleChildScrollView(
                     physics: BouncingScrollPhysics(),
-                    padding: EdgeInsets.symmetric(horizontal: 24),
+                    padding: EdgeInsets.symmetric(horizontal: isWide ? 40 : 18),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 32),
-                        _buildWelcomeSection(),
-                        SizedBox(height: 32),
-                        _buildQuickActions(),
-                        SizedBox(height: 32),
-                        _buildFeatureCards(),
-                        SizedBox(height: 60), // Extra bottom padding
+                        SizedBox(height: isWide ? 36 : 24),
+                        _buildWelcomeSection(isWide),
+                        SizedBox(height: isWide ? 36 : 24),
+                        _buildQuickActions(isWide),
+                        SizedBox(height: isWide ? 36 : 24),
+                        _buildFeatureCards(isWide),
+                        SizedBox(height: isWide ? 60 : 32),
                       ],
                     ),
                   ),
@@ -141,6 +139,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return AnimatedBuilder(
       animation: _floatingController,
       builder: (context, child) {
+        final width = MediaQuery.of(context).size.width;
         return Stack(
           children: List.generate(8, (index) {
             final colors = [
@@ -150,9 +149,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               vibrantGreen
             ];
             final color = colors[index % colors.length];
-
             return Positioned(
-              left: (index * 90.0) + (_floatingController.value * 50) - 100,
+              left: (index * (width / 8)) +
+                  (_floatingController.value * (width / 16)) -
+                  100,
               top: 50 +
                   (index * 120.0) +
                   (sin(_floatingController.value * 2 * pi + index) * 60),
@@ -182,7 +182,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildModernHeader() {
+  Widget _buildModernHeader(double width) {
+    final isWide = width > 600;
     return SlideTransition(
       position: Tween<Offset>(
         begin: Offset(0, -1),
@@ -192,13 +193,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         curve: Curves.elasticOut,
       )),
       child: Container(
-        margin: EdgeInsets.all(24),
+        margin: EdgeInsets.all(isWide ? 32 : 16),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(isWide ? 32 : 20),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+              padding: EdgeInsets.symmetric(
+                  vertical: isWide ? 28 : 20, horizontal: isWide ? 32 : 18),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
@@ -209,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     vibrantPurple.withOpacity(0.05),
                   ],
                 ),
-                borderRadius: BorderRadius.circular(24),
+                borderRadius: BorderRadius.circular(isWide ? 32 : 20),
                 border: Border.all(
                   color: vibrantBlue.withOpacity(0.2),
                   width: 1,
@@ -225,13 +227,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               child: Row(
                 children: [
                   Container(
-                    width: 48,
-                    height: 48,
+                    width: isWide ? 56 : 48,
+                    height: isWide ? 56 : 48,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [vibrantBlue, vibrantPurple],
                       ),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(isWide ? 20 : 16),
                       boxShadow: [
                         BoxShadow(
                           color: vibrantBlue.withOpacity(0.3),
@@ -240,13 +242,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         ),
                       ],
                     ),
-                    child: Icon(
-                      Icons.visibility_rounded,
-                      color: secondaryBackground,
-                      size: 24,
+                    child: Center(
+                      child: Icon(
+                        Icons.visibility_rounded,
+                        color: secondaryBackground,
+                        size: isWide ? 32 : 24,
+                      ),
                     ),
                   ),
-                  SizedBox(width: 16),
+                  SizedBox(width: isWide ? 24 : 16),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -254,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         Text(
                           'Sense Path',
                           style: TextStyle(
-                            fontSize: 24,
+                            fontSize: isWide ? 28 : 22,
                             fontWeight: FontWeight.w800,
                             color: primaryText,
                           ),
@@ -262,7 +266,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         Text(
                           'AI Vision Assistant',
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: isWide ? 16 : 13,
                             color: secondaryText,
                             fontWeight: FontWeight.w500,
                           ),
@@ -271,15 +275,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(12),
+                    padding: EdgeInsets.all(isWide ? 16 : 12),
                     decoration: BoxDecoration(
                       color: vibrantGreen.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(isWide ? 16 : 12),
                     ),
                     child: Icon(
                       Icons.notifications_rounded,
                       color: vibrantGreen,
-                      size: 20,
+                      size: isWide ? 28 : 20,
                     ),
                   ),
                 ],
@@ -291,7 +295,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildWelcomeSection() {
+  Widget _buildWelcomeSection(bool isWide) {
     return FadeTransition(
       opacity: Tween<double>(begin: 0, end: 1).animate(
         CurvedAnimation(
@@ -305,17 +309,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           Text(
             'Good Afternoon! 👋',
             style: TextStyle(
-              fontSize: 32,
+              fontSize: isWide ? 36 : 28,
               fontWeight: FontWeight.w800,
               color: primaryText,
               height: 1.2,
             ),
           ),
-          SizedBox(height: 8),
+          SizedBox(height: isWide ? 12 : 8),
           Text(
             'Ready to explore the world with AI assistance?',
             style: TextStyle(
-              fontSize: 18,
+              fontSize: isWide ? 19 : 16,
               color: secondaryText,
               fontWeight: FontWeight.w500,
               height: 1.4,
@@ -326,7 +330,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildQuickActions() {
+  Widget _buildQuickActions(bool isWide) {
     return Row(
       children: [
         Expanded(
@@ -335,15 +339,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             Icons.mic_rounded,
             vibrantPurple,
             () {},
+            isWide,
           ),
         ),
-        SizedBox(width: 16),
+        SizedBox(width: isWide ? 24 : 12),
         Expanded(
           child: _buildQuickActionCard(
             'Emergency',
             Icons.emergency_rounded,
             vibrantRed,
             () {},
+            isWide,
           ),
         ),
       ],
@@ -351,7 +357,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildQuickActionCard(
-      String title, IconData icon, Color color, VoidCallback onTap) {
+      String title, IconData icon, Color color, VoidCallback onTap, bool isWide) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -359,9 +365,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           HapticFeedback.lightImpact();
           onTap();
         },
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(isWide ? 24 : 20),
         child: Container(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(isWide ? 24 : 16),
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -371,7 +377,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 color.withOpacity(0.05),
               ],
             ),
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(isWide ? 24 : 20),
             border: Border.all(
               color: color.withOpacity(0.2),
               width: 1,
@@ -380,10 +386,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.all(12),
+                padding: EdgeInsets.all(isWide ? 16 : 12),
                 decoration: BoxDecoration(
                   color: color,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(isWide ? 16 : 12),
                   boxShadow: [
                     BoxShadow(
                       color: color.withOpacity(0.3),
@@ -392,13 +398,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     ),
                   ],
                 ),
-                child: Icon(icon, color: secondaryBackground, size: 24),
+                child: Icon(icon, color: secondaryBackground, size: isWide ? 32 : 24),
               ),
-              SizedBox(height: 12),
+              SizedBox(height: isWide ? 14 : 10),
               Text(
                 title,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: isWide ? 16 : 14,
                   fontWeight: FontWeight.w600,
                   color: primaryText,
                 ),
@@ -410,26 +416,26 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildFeatureCards() {
+  Widget _buildFeatureCards(bool isWide) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Features',
           style: TextStyle(
-            fontSize: 24,
+            fontSize: isWide ? 28 : 22,
             fontWeight: FontWeight.w700,
             color: primaryText,
           ),
         ),
-        SizedBox(height: 20),
+        SizedBox(height: isWide ? 24 : 16),
         GridView.count(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
-          crossAxisCount: 2,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-          childAspectRatio: 1.1, // Increased from 0.9 to 1.1 for more height
+          crossAxisCount: isWide ? 3 : 2,
+          crossAxisSpacing: isWide ? 24 : 12,
+          mainAxisSpacing: isWide ? 24 : 12,
+          childAspectRatio: isWide ? 1.1 : 0.95,
           children: [
             _buildFeatureCard(
               'Object Detection',
@@ -437,6 +443,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               Icons.camera_alt_rounded,
               [vibrantBlue, Color(0xFF60A5FA)],
               0.1,
+              isWide,
             ),
             _buildFeatureCard(
               'Navigation',
@@ -444,6 +451,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               Icons.navigation_rounded,
               [vibrantGreen, Color(0xFF34D399)],
               0.2,
+              isWide,
             ),
             _buildFeatureCard(
               'Text Reader',
@@ -451,6 +459,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               Icons.auto_stories_rounded,
               [vibrantOrange, Color(0xFFFBBF24)],
               0.3,
+              isWide,
             ),
             _buildFeatureCard(
               'Voice Assistant',
@@ -458,6 +467,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               Icons.record_voice_over_rounded,
               [vibrantPink, Color(0xFFF472B6)],
               0.4,
+              isWide,
             ),
           ],
         ),
@@ -471,6 +481,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     IconData icon,
     List<Color> colors,
     double delay,
+    bool isWide,
   ) {
     return SlideTransition(
       position: Tween<Offset>(
@@ -489,9 +500,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             HapticFeedback.lightImpact();
             _showFeatureDialog(title);
           },
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(isWide ? 28 : 20),
           child: Container(
-            padding: EdgeInsets.all(16), // Reduced padding from 20 to 16
+            padding: EdgeInsets.all(isWide ? 20 : 14),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -502,7 +513,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   colors[1].withOpacity(0.1),
                 ],
               ),
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: BorderRadius.circular(isWide ? 28 : 20),
               boxShadow: [
                 BoxShadow(
                   color: colors[0].withOpacity(0.1),
@@ -519,12 +530,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Flexible(
-                  // Use Flexible instead of fixed padding
                   child: Container(
-                    padding: EdgeInsets.all(12), // Reduced from 16 to 12
+                    padding: EdgeInsets.all(isWide ? 16 : 10),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(colors: colors),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(isWide ? 18 : 12),
                       boxShadow: [
                         BoxShadow(
                           color: colors[0].withOpacity(0.3),
@@ -535,36 +545,34 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     ),
                     child: Icon(icon,
                         color: secondaryBackground,
-                        size: 24), // Reduced from 28 to 24
+                        size: isWide ? 32 : 24),
                   ),
                 ),
-                SizedBox(height: 12), // Reduced from 16 to 12
+                SizedBox(height: isWide ? 16 : 10),
                 Flexible(
-                  // Use Flexible for text
                   child: Text(
                     title,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 14, // Reduced from 16 to 14
+                      fontSize: isWide ? 16 : 13,
                       fontWeight: FontWeight.w700,
                       color: primaryText,
                     ),
-                    maxLines: 2, // Limit to 2 lines
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                SizedBox(height: 6), // Reduced from 8 to 6
+                SizedBox(height: isWide ? 8 : 5),
                 Flexible(
-                  // Use Flexible for subtitle
                   child: Text(
                     subtitle,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 11, // Reduced from 12 to 11
+                      fontSize: isWide ? 12 : 10,
                       color: secondaryText,
                       fontWeight: FontWeight.w500,
                     ),
-                    maxLines: 2, // Limit to 2 lines
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -636,8 +644,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: vibrantBlue,
                       foregroundColor: secondaryBackground,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),

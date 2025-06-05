@@ -4,6 +4,8 @@ import 'dart:ui';
 import 'dart:math';
 
 class EmergencyScreen extends StatefulWidget {
+  const EmergencyScreen({super.key});
+
   @override
   _EmergencyScreenState createState() => _EmergencyScreenState();
 }
@@ -362,7 +364,7 @@ class _EmergencyScreenState extends State<EmergencyScreen>
   }
 
   Widget _buildFunctionalSOSSection() {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(24),

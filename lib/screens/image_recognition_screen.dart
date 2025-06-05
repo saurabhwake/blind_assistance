@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:ui';
-import 'dart:typed_data';
 
 class ImageRecognitionScreen extends StatefulWidget {
+  const ImageRecognitionScreen({super.key});
+
   @override
   _ImageRecognitionScreenState createState() => _ImageRecognitionScreenState();
 }
@@ -155,25 +156,7 @@ class _ImageRecognitionScreenState extends State<ImageRecognitionScreen>
               ),
               child: Row(
                 children: [
-                  Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () => Navigator.pop(context),
-                      borderRadius: BorderRadius.circular(12),
-                      child: Container(
-                        padding: EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: vibrantBlue.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Icon(
-                          Icons.arrow_back_ios_rounded,
-                          color: vibrantBlue,
-                          size: 20,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Back arrow removed here
                   Expanded(
                     child: Text(
                       'Image Recognition',
@@ -244,7 +227,7 @@ class _ImageRecognitionScreenState extends State<ImageRecognitionScreen>
   }
 
   Widget _buildModernImageSection() {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 300,
       child: ClipRRect(
@@ -624,7 +607,7 @@ class _ImageRecognitionScreenState extends State<ImageRecognitionScreen>
                   ),
                 ),
                 Text(
-                  'Confidence: ${confidence}%',
+                  'Confidence: $confidence%',
                   style: TextStyle(
                     fontSize: 14,
                     color: secondaryText,
@@ -640,7 +623,7 @@ class _ImageRecognitionScreenState extends State<ImageRecognitionScreen>
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
-              '${confidence}%',
+              '$confidence%',
               style: TextStyle(
                 color: secondaryBackground,
                 fontSize: 12,

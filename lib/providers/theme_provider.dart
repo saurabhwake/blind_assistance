@@ -86,11 +86,9 @@ class ThemeProvider extends ChangeNotifier {
         primary: vibrantBlue,
         secondary: vibrantPurple,
         surface: secondaryBackground,
-        background: primaryBackground,
         onPrimary: secondaryBackground,
         onSecondary: secondaryBackground,
         onSurface: primaryText,
-        onBackground: primaryText,
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: vibrantBlue,
@@ -107,14 +105,14 @@ class ThemeProvider extends ChangeNotifier {
         ),
       ),
       switchTheme: SwitchThemeData(
-        thumbColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        thumbColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return vibrantBlue;
           }
           return Colors.grey;
         }),
-        trackColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        trackColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return vibrantBlue.withOpacity(0.3);
           }
           return Colors.grey.withOpacity(0.3);
@@ -154,11 +152,9 @@ class ThemeProvider extends ChangeNotifier {
         primary: vibrantBlue,
         secondary: vibrantPurple,
         surface: darkSecondaryBackground,
-        background: darkPrimaryBackground,
         onPrimary: darkPrimaryBackground,
         onSecondary: darkPrimaryBackground,
         onSurface: darkPrimaryText,
-        onBackground: darkPrimaryText,
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: darkSecondaryBackground,
@@ -175,14 +171,14 @@ class ThemeProvider extends ChangeNotifier {
         ),
       ),
       switchTheme: SwitchThemeData(
-        thumbColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        thumbColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return vibrantBlue;
           }
           return Colors.grey;
         }),
-        trackColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        trackColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return vibrantBlue.withOpacity(0.3);
           }
           return Colors.grey.withOpacity(0.3);

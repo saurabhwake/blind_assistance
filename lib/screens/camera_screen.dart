@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/semantics.dart'; // Add this line
 
-// Rest of your camera_screen.dart code remains the same
-
 class CameraScreen extends StatefulWidget {
+  const CameraScreen({super.key});
+
   @override
   _CameraScreenState createState() => _CameraScreenState();
 }
@@ -15,7 +13,7 @@ class _CameraScreenState extends State<CameraScreen>
     with TickerProviderStateMixin {
   bool _isFlashOn = false;
   bool _isFrontCamera = false;
-  bool _isRecording = false;
+  final bool _isRecording = false;
   bool _showCapturedImage = false;
   late AnimationController _recordingController;
   late AnimationController _captureController;
@@ -93,7 +91,7 @@ class _CameraScreenState extends State<CameraScreen>
         children: [
           // Camera Preview Placeholder
           Center(
-            child: Container(
+            child: SizedBox(
               width: double.infinity,
               height: double.infinity,
               child: Column(
@@ -277,7 +275,7 @@ class _CameraScreenState extends State<CameraScreen>
   }
 
   Widget _buildFocusGrid() {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: double.infinity,
       child: CustomPaint(
@@ -305,11 +303,7 @@ class _CameraScreenState extends State<CameraScreen>
         ),
         child: Row(
           children: [
-            _buildTopButton(
-              icon: Icons.arrow_back_ios_rounded,
-              onTap: () => Navigator.pop(context),
-              semanticsLabel: 'Go back to previous screen',
-            ),
+            // Removed back arrow button here
             Expanded(
               child: Center(
                 child: Text(
@@ -559,7 +553,6 @@ class _CameraScreenState extends State<CameraScreen>
     _captureController.forward().then((_) {
       _captureController.reverse();
     });
-
     // Simulate capture delay
     await Future.delayed(Duration(milliseconds: 500));
 
